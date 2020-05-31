@@ -13,6 +13,8 @@ public class CameraShake : MonoBehaviour
     public float endshakeTime = 0.5f;
     public float endshakeMagnetude = 0.1f;
 
+    [SerializeField] DepthTextureMode depthTextureMode;
+
     private Vector3 cameraInitialPosition;
     // private Vector3 cameraInitialRotaion;
 
@@ -34,6 +36,13 @@ public class CameraShake : MonoBehaviour
         {
             mainCamera = GetComponent<Camera>();
         }
+
+        mainCamera.depthTextureMode = depthTextureMode;
+    }
+
+    private void OnValidate()
+    {
+        mainCamera.depthTextureMode = depthTextureMode;
     }
 
     public void ShakeIt()

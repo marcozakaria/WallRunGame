@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI coinsCollectedText;
     [SerializeField] TextMeshProUGUI scoreText;
     [SerializeField] TextMeshProUGUI highScoreText;
+    [SerializeField] Button playButton;
+    [SerializeField] GameObject mainMenuButtons;
+    [SerializeField] GameObject deathMenu;
 
     [Header("MusicButton")]
     [SerializeField] Image musicButttonImage;
@@ -34,12 +38,22 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        Application.targetFrameRate = 60;
     }
 
     private void Start()
     {
         highScore = playerPrefManager.GetHighScore();
-       // highScoreText.text = highScore.ToString();
+        // highScoreText.text = highScore.ToString();
+    }
+
+    private void Update()
+    {
+        if (isPlaying)
+        {
+            scoreText.text = (score++).ToString();
+        }
     }
 
     public void CoinCollected(int value)
@@ -50,18 +64,22 @@ public class GameManager : MonoBehaviour
     public void OnGameOver()
     {
         isPlaying = false;
+        CameraShake.instance.ShakeIt();
+        deathMenu.SetActive(true);
 
         if (score > highScore)
         {
             highScore = score;
             playerPrefManager.SaveHighScore(highScore);
-            highScoreText.text = highScore.ToString();
+            //highScoreText.text = highScore.ToString();
         }
     }
 
     #region UI Buttons
     public void OnPlayButtonPressed()
     {
+        playButton.gameObject.SetActive(false);
+        mainMenuButtons.SetActive(false);
         isPlaying = true;
         coinsCollected = score = 0;
     }
@@ -91,6 +109,11 @@ public class GameManager : MonoBehaviour
             AudioManager.instance.StopMainMusic();
             musicButttonImage.sprite = musicOff;
         }
+    }
+
+    public void OnRetryButton()
+    {
+        SceneManager.LoadScene(0);
     }
 
     #endregion

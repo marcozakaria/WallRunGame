@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] Transform playerTransform;
     [SerializeField] Transform centerTansform;
-    [SerializeField] float speed = 5;
+    [SerializeField] float speed = 50;
     [SerializeField] float jumpForce = 5;
     [SerializeField] float downForceMul = 0.7f;
 
@@ -29,20 +29,31 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-       // Quaternion angleQ = Quaternion.AngleAxis(Time.fixedDeltaTime * speed, Vector3.up);
-        //playerRG.MoveRotation(angleQ * playerRG.rotation);
-        //playerRG.MovePosition(angleQ * (playerTransform.position - centerTansform.position) + centerTansform.position);
+        /*  Quaternion angleQ = Quaternion.AngleAxis(Time.fixedDeltaTime * speed, centerTansform.up);
+          playerRG.MovePosition(angleQ * (playerTransform.position - centerTansform.position) + centerTansform.position);
+          playerRG.MoveRotation(angleQ * playerTransform.rotation);*/
+        if (GameManager.instance.isPlaying)
+        {
+            transform.RotateAround(centerTansform.position, transform.up, Time.deltaTime * -speed);
 
-        if (Physics.Raycast(playerTransform.position, -Vector3.up, 1, groundLayer))
-        {
-            isGrounded = doubleJump =true;
-        }
-        else
-        {
-            isGrounded = false;
-            if (playerRG.velocity.y < 0)
+            if (Physics.Raycast(playerTransform.position, -Vector3.up, 1, groundLayer))
             {
-                playerRG.velocity += Vector3.up * Physics.gravity.y * Time.fixedDeltaTime * downForceMul;
+                isGrounded = doubleJump = true;
+            }
+            else
+            {
+
+                isGrounded = false;
+                if (playerRG.velocity.y < 0)
+                {
+                    playerRG.velocity += Vector3.up * Physics.gravity.y * Time.fixedDeltaTime * downForceMul;
+                }
+                else
+                {
+                    Vector3 vel = playerRG.velocity;
+                    vel.y -= 9.8f * Time.deltaTime;
+                    playerRG.velocity = vel;
+                }
             }
         }
     }
@@ -50,18 +61,23 @@ public class PlayerController : MonoBehaviour
     private void Jump()
     {
         if (isGrounded)
-        {
+        {           
             playerRG.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
         else if (doubleJump)
         {
             doubleJump = false;
-            playerRG.AddForce(Vector3.up * jumpForce/2, ForceMode.Impulse);
+            playerRG.AddForce(Vector3.up * (playerRG.velocity.y < 0 ? jumpForce*2 : jumpForce/2f), ForceMode.Impulse);
         }       
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        
+        if (collision.gameObject.CompareTag("death"))
+        {
+            MyObjectPool.instance.SpawnParticleFromPool(2, transform.position);
+            GameManager.instance.OnGameOver();
+            gameObject.SetActive(false);
+        }
     }
 }

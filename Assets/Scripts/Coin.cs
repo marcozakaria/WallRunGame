@@ -7,16 +7,16 @@ public class Coin : MonoBehaviour
 
     private void Update()
     {
-        transform.Rotate(Vector3.forward * Time.deltaTime * speed);
+        transform.Rotate(Vector3.forward * Time.deltaTime * speed, Space.World);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-           // AudioManager.instance.Play("coin");
+            AudioManager.instance.Play("coin");
             GameManager.instance.CoinCollected(value);
-           // MyObjectPool.instance.SpawnParticleFromPool(0, transform.position);
+            MyObjectPool.instance.SpawnParticleFromPool(4, transform.position);
 
             gameObject.SetActive(false);
         }

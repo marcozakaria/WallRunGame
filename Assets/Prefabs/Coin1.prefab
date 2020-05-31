@@ -27,13 +27,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6936799717335218714}
-  m_LocalRotation: {x: -0.27059805, y: 0.6532815, z: 0.6532815, w: 0.27059805}
-  m_LocalPosition: {x: -8.597316, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -90.00001, y: 0, z: 135}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4846055679278218583
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -89,10 +89,10 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6936799717335218714}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.19999997, y: 0.043697268, z: 0.20001869}
+  m_Size: {x: 0.19999997, y: 0.06, z: 0.222}
   m_Center: {x: -0.000000003759076, y: -0.0002925936, z: 0.0006640814}
 --- !u!114 &1080881195
 MonoBehaviour:
@@ -106,5 +106,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c55b00db9a514224da89b6ba4882849e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 50
+  speed: 75
   value: 5

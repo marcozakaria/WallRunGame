@@ -68,8 +68,6 @@ public class MyObjectPool : MonoBehaviour
                 queue.Enqueue(obj);
             }
         }
-
-        // Debug.Log(poolDictionary.Values.Count);
     }
 
     public void SpawnFromPool(int id, Vector3 position)
@@ -78,11 +76,19 @@ public class MyObjectPool : MonoBehaviour
         //Debug.Log("Spawn");
         objectToSpawn.SetActive(true);
         objectToSpawn.transform.position = position;
-        //objectToSpawn.transform.parent = obsteclesHolder;
 
         poolDictionary[id].Enqueue(objectToSpawn);
+    }
 
-        //return objectToSpawn.transform;
+    public void SpawnFromPool(int id, Vector3 position, Transform parent)
+    {
+        GameObject objectToSpawn = poolDictionary[id].Dequeue();
+        //Debug.Log("Spawn");
+        objectToSpawn.SetActive(true);
+        objectToSpawn.transform.position = position;
+        objectToSpawn.transform.parent = parent;
+
+        poolDictionary[id].Enqueue(objectToSpawn);
     }
 
     public void ChangeSpriteFromPool(int id,int spriteID)
@@ -118,14 +124,5 @@ public class MyObjectPool : MonoBehaviour
         return objectToSpawn;
     }
 
-    /*public void SpawnParticleWithColor(string tag, Vector3 position, Color color)
-    {
-        GameObject objectToSpawn = poolDictionary[tag].Dequeue();
-
-        objectToSpawn.SetActive(true);
-        objectToSpawn.transform.position = position;      
-
-        poolDictionary[tag].Enqueue(objectToSpawn);
-    }*/
 }
 
