@@ -15,4 +15,15 @@ public class PlayerPrefManager
     {
         return PlayerPrefs.GetInt(highScore);
     }
+
+    public void SaveCoins(int value)
+    {
+        PlayerPrefs.SetInt(moneyCollected, value);
+        PlayerPrefs.Save();
+    }
+
+    public int GetMoney()
+    {
+        return PlayerPrefs.GetInt(moneyCollected);
+    }
 }

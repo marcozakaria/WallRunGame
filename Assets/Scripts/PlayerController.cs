@@ -67,11 +67,11 @@ public class PlayerController : MonoBehaviour
         else if (doubleJump)
         {
             doubleJump = false;
-            playerRG.AddForce(Vector3.up * (playerRG.velocity.y < 0 ? jumpForce*2 : jumpForce/2f), ForceMode.Impulse);
+            playerRG.AddForce(Vector3.up * (playerRG.velocity.y < 0 ? jumpForce : jumpForce/2f), ForceMode.Impulse);
         }       
     }
 
-    private void OnCollisionEnter(Collision collision)
+   /* private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("death"))
         {
@@ -79,5 +79,5 @@ public class PlayerController : MonoBehaviour
             GameManager.instance.OnGameOver();
             gameObject.SetActive(false);
         }
-    }
+    }*/
 }

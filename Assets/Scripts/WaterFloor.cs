@@ -19,6 +19,8 @@ public class WaterFloor : MonoBehaviour
         {
             AudioManager.instance.PlaySingle(water);
             MyObjectPool.instance.SpawnParticleFromPool(3, collision.contacts[0].point);
+            MyObjectPool.instance.SpawnParticleFromPool(2, collision.contacts[0].point);
+            GameManager.instance.OnGameOver();
         }
     }
 }

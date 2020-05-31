@@ -21,9 +21,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] Image musicButttonImage;
     [SerializeField] Sprite musicOn, musicOff;
 
+    [Header("Player")]
+    [SerializeField] GameObject player;
+
     public bool isPlaying = false;
 
-    private int score, highScore, coinsCollected;
+    [HideInInspector] public int score, highScore, coinsCollected;
 
     private PlayerPrefManager playerPrefManager = new PlayerPrefManager();
     private bool isMusicOff = false;
@@ -44,7 +47,10 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         highScore = playerPrefManager.GetHighScore();
+        coinsCollected = playerPrefManager.GetMoney();
+        coinsCollectedText.text = coinsCollected.ToString();
         // highScoreText.text = highScore.ToString();
     }
 
@@ -59,11 +65,13 @@ public class GameManager : MonoBehaviour
     public void CoinCollected(int value)
     {
         coinsCollected += value;
+        coinsCollectedText.text = coinsCollected.ToString();
     }
 
     public void OnGameOver()
     {
         isPlaying = false;
+        player.SetActive(false);
         CameraShake.instance.ShakeIt();
         deathMenu.SetActive(true);
 
@@ -71,6 +79,7 @@ public class GameManager : MonoBehaviour
         {
             highScore = score;
             playerPrefManager.SaveHighScore(highScore);
+            playerPrefManager.SaveCoins(coinsCollected);
             //highScoreText.text = highScore.ToString();
         }
     }

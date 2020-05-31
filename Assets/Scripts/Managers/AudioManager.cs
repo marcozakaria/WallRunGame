@@ -49,7 +49,7 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        //DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(gameObject);
 
         // intialize each clip with audiosoure
         foreach (SoundClips s in soundClips)
