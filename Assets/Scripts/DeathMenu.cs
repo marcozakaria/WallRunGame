@@ -1,13 +1,14 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 public class DeathMenu : CanvasGroubAlphaAnim
 {
+    [Space(10)]
     [SerializeField] TextMeshProUGUI hsText;
     [SerializeField] RectTransform scoretext;
     [SerializeField] float timeToCount = 1.5f;
+
     private float valueToReach;
 
     private void OnEnable()

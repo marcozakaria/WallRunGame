@@ -1,9 +1,8 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
+using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -24,7 +23,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Player & objects")]
     [SerializeField] PlayerController player;
-    public Transform waterPlane;
+    //public Transform waterPlane;
 
     public bool isPlaying = false;
 

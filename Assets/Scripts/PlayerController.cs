@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -38,9 +36,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        /*  Quaternion angleQ = Quaternion.AngleAxis(Time.fixedDeltaTime * speed, centerTansform.up);
-          playerRG.MovePosition(angleQ * (playerTransform.position - centerTansform.position) + centerTansform.position);
-          playerRG.MoveRotation(angleQ * playerTransform.rotation);*/
+
         if (GameManager.instance.isPlaying)
         {
             transform.RotateAround(centerTansform.position, transform.up, Time.deltaTime * -speed);
