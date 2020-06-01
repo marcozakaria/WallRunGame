@@ -16,13 +16,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] Button playButton;
     [SerializeField] GameObject mainMenuButtons;
     [SerializeField] GameObject deathMenu;
+    [SerializeField] Animator transitionAnimator;
 
     [Header("MusicButton")]
     [SerializeField] Image musicButttonImage;
     [SerializeField] Sprite musicOn, musicOff;
 
     [Header("Player")]
-    [SerializeField] GameObject player;
+    [SerializeField] PlayerController player;
 
     public bool isPlaying = false;
 
@@ -47,10 +48,12 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+
         highScore = playerPrefManager.GetHighScore();
         coinsCollected = playerPrefManager.GetMoney();
         coinsCollectedText.text = coinsCollected.ToString();
+
         // highScoreText.text = highScore.ToString();
     }
 
@@ -71,7 +74,7 @@ public class GameManager : MonoBehaviour
     public void OnGameOver()
     {
         isPlaying = false;
-        player.SetActive(false);
+        player.gameObject.SetActive(false);
         CameraShake.instance.ShakeIt();
         deathMenu.SetActive(true);
 
@@ -91,6 +94,7 @@ public class GameManager : MonoBehaviour
         mainMenuButtons.SetActive(false);
         isPlaying = true;
         coinsCollected = score = 0;
+        player.StartGame();
     }
 
     public void OnShareButtonPressed()
@@ -122,6 +126,13 @@ public class GameManager : MonoBehaviour
 
     public void OnRetryButton()
     {
+        transitionAnimator.SetTrigger("close");
+        StartCoroutine(ReloadLevel());
+    }
+
+    IEnumerator ReloadLevel()
+    {
+        yield return new WaitForSeconds(0.75f);
         SceneManager.LoadScene(0);
     }
 

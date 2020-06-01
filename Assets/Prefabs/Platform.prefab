@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 1
-  coinToTrapPercent: 0.85
+  coinToTrapPercent: 1
   spawnPoint: {fileID: 7523707678182581560}
 --- !u!64 &1741417836017040573
 MeshCollider:

@@ -4,15 +4,24 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] Transform playerTransform;
-    [SerializeField] Transform centerTansform;
+    [Header("Settings")]
     [SerializeField] float speed = 50;
     [SerializeField] float jumpForce = 5;
     [SerializeField] float downForceMul = 0.7f;
-
     [SerializeField] LayerMask groundLayer;
+
+    [Header("components")]
+    [SerializeField] Transform playerTransform;
+    [SerializeField] Transform centerTansform;
     [SerializeField] Rigidbody playerRG;
-    private bool isGrounded , doubleJump;
+    [SerializeField] Animator animator;
+
+    private bool isGrounded, doubleJump;
+
+    public void StartGame()
+    {
+        animator.SetBool("move", true);
+    }
 
     private void Update()
     {
@@ -39,10 +48,10 @@ public class PlayerController : MonoBehaviour
             if (Physics.Raycast(playerTransform.position, -Vector3.up, 1, groundLayer))
             {
                 isGrounded = doubleJump = true;
+                animator.SetBool("isGrounded", true);
             }
             else
             {
-
                 isGrounded = false;
                 if (playerRG.velocity.y < 0)
                 {
@@ -61,11 +70,13 @@ public class PlayerController : MonoBehaviour
     private void Jump()
     {
         if (isGrounded)
-        {           
+        {
+            animator.SetTrigger("jump");
             playerRG.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
         else if (doubleJump)
         {
+            animator.SetTrigger("jump");
             doubleJump = false;
             playerRG.AddForce(Vector3.up * (playerRG.velocity.y < 0 ? jumpForce : jumpForce/2f), ForceMode.Impulse);
         }       

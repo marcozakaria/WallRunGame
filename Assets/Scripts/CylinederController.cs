@@ -2,28 +2,14 @@
 
 public class CylinederController : MonoBehaviour
 {
-    [SerializeField] float speed = 1;
 
-    [SerializeField] float distanceToRecycle = 15;
     [SerializeField] Platform[] platforms;
-    private Transform playerTransform;
 
-    private void Start()
+    public void Recylce()
     {
-        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-    }
-
-    private void FixedUpdate()
-    {
-        if (GameManager.instance.isPlaying)
+        for (int i = 0; i < platforms.Length; i++)
         {
-            transform.Rotate(Vector3.up * Time.fixedDeltaTime * speed);
-           
+            platforms[i].RefreshPlatform();
         }
-    }
-
-    private void Recycle()
-    {
-        
     }
 }

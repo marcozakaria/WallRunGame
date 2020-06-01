@@ -6,6 +6,8 @@ public class CylinderManager : MonoBehaviour
 {
     public static CylinderManager instance = null;
 
+    //[SerializeField] CylinederController[] cylinederControllers;
+
     Queue<GameObject> wallsQueue = new Queue<GameObject>();
 
     public Vector3 offset = new Vector3(0, 7.85f, 0);
@@ -80,8 +82,10 @@ public class CylinderManager : MonoBehaviour
         GameObject obj = wallsQueue.Dequeue();
 
         obj.transform.localPosition = lastOneSpawned.localPosition + offset;
+        obj.transform.Rotate(lastOneSpawned.localRotation.eulerAngles - new Vector3(0, 45f, 0));
         obj.SetActive(true);
         lastOneSpawned = obj.transform;
+        obj.GetComponent<CylinederController>().Recylce();
 
         wallsQueue.Enqueue(obj);
     }
