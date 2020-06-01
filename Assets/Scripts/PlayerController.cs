@@ -71,11 +71,13 @@ public class PlayerController : MonoBehaviour
     {
         if (isGrounded)
         {
+            AudioManager.instance.Play("jump");
             animator.SetTrigger("jump");
             playerRG.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
         else if (doubleJump)
         {
+            AudioManager.instance.Play("jump");
             animator.SetTrigger("jump");
             doubleJump = false;
             playerRG.AddForce(Vector3.up * (playerRG.velocity.y < 0 ? jumpForce : jumpForce/2f), ForceMode.Impulse);

@@ -27,5 +27,7 @@ public class DeathMenu : CanvasGroubAlphaAnim
             hsText.text = ((int)Mathf.Lerp(0, valueToReach, time / timeToCount)).ToString();
             yield return null;
         }
+
+        hsText.text = valueToReach.ToString();
     }
 }

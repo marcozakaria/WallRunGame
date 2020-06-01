@@ -8,7 +8,7 @@ public class CylinderManager : MonoBehaviour
 
     //[SerializeField] CylinederController[] cylinederControllers;
 
-    Queue<GameObject> wallsQueue = new Queue<GameObject>();
+    Queue<CylinederController> wallsQueue = new Queue<CylinederController>();
 
     public Vector3 offset = new Vector3(0, 7.85f, 0);
 
@@ -25,17 +25,20 @@ public class CylinderManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-
-        for (int i = transform.childCount -1; i >= 0; i--)
-        {
-            wallsQueue.Enqueue(transform.GetChild(i).gameObject);
-        }
     }
 
     private void Start()
     {
+        for (int i = transform.childCount - 1; i >= 0; i--)
+        {
+            CylinederController obj = transform.GetChild(i).GetComponent<CylinederController>();
+            obj.Recylce();
+            wallsQueue.Enqueue(obj);
+        }
+
         lastOneSpawned = transform.GetChild(0);
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+
     }
 
     private void Update()
@@ -52,7 +55,7 @@ public class CylinderManager : MonoBehaviour
 
     private void RandomizeChilds()
     {
-        List<GameObject> tempList = new List<GameObject>();
+        List<CylinederController> tempList = new List<CylinederController>();
         //Debug.Log(wallsQueue.Count);
         for (int i = 0; i < wallsQueue.Count; i++)
         {
@@ -63,7 +66,7 @@ public class CylinderManager : MonoBehaviour
 
         for (int i = 0; i < tempList.Count; i++)
         {
-            GameObject temp = tempList[i];
+            CylinederController temp = tempList[i];
             int randomIndex = Random.Range(i, tempList.Count);
             tempList[i] = tempList[randomIndex];
             tempList[randomIndex] = temp;
@@ -79,13 +82,13 @@ public class CylinderManager : MonoBehaviour
 
     public void DequeueWallFromQueue()
     {
-        GameObject obj = wallsQueue.Dequeue();
+        CylinederController obj = wallsQueue.Dequeue();
 
         obj.transform.localPosition = lastOneSpawned.localPosition + offset;
-        obj.transform.Rotate(lastOneSpawned.localRotation.eulerAngles - new Vector3(0, 45f, 0));
-        obj.SetActive(true);
+        //obj.transform.Rotate(lastOneSpawned.localRotation.eulerAngles - new Vector3(0, 45f, 0));
+        obj.gameObject.SetActive(true);
         lastOneSpawned = obj.transform;
-        obj.GetComponent<CylinederController>().Recylce();
+        obj.Recylce();
 
         wallsQueue.Enqueue(obj);
     }

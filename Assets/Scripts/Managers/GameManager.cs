@@ -22,8 +22,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] Image musicButttonImage;
     [SerializeField] Sprite musicOn, musicOff;
 
-    [Header("Player")]
+    [Header("Player & objects")]
     [SerializeField] PlayerController player;
+    public Transform waterPlane;
 
     public bool isPlaying = false;
 
@@ -61,7 +62,8 @@ public class GameManager : MonoBehaviour
     {
         if (isPlaying)
         {
-            scoreText.text = (score++).ToString();
+            score++;
+            scoreText.text = (score).ToString();
         }
     }
 
@@ -76,15 +78,15 @@ public class GameManager : MonoBehaviour
         isPlaying = false;
         player.gameObject.SetActive(false);
         CameraShake.instance.ShakeIt();
-        deathMenu.SetActive(true);
 
         if (score > highScore)
         {
             highScore = score;
             playerPrefManager.SaveHighScore(highScore);
-            playerPrefManager.SaveCoins(coinsCollected);
-            //highScoreText.text = highScore.ToString();
         }
+
+        playerPrefManager.SaveCoins(coinsCollected);
+        deathMenu.SetActive(true);
     }
 
     #region UI Buttons
@@ -93,23 +95,26 @@ public class GameManager : MonoBehaviour
         playButton.gameObject.SetActive(false);
         mainMenuButtons.SetActive(false);
         isPlaying = true;
-        coinsCollected = score = 0;
+        score = 0;
         player.StartGame();
     }
 
     public void OnShareButtonPressed()
     {
+        AudioManager.instance.Play("button");
         new NativeShare().SetTitle("Try This Cool Game").
         SetText("I Scored : " + highScore + " Points in the game \n How mush could you Score? \n ").Share();
     }
 
     public void OnRateButtonPressed()
     {
-        Application.OpenURL("");
+        AudioManager.instance.Play("button");
+        Application.OpenURL("http://www.google.com");
     }
 
     public void OnMusicButtonPressed()
     {
+        AudioManager.instance.Play("button");
         if (isMusicOff)
         {
             isMusicOff = false;
@@ -126,6 +131,7 @@ public class GameManager : MonoBehaviour
 
     public void OnRetryButton()
     {
+        AudioManager.instance.Play("button");
         transitionAnimator.SetTrigger("close");
         StartCoroutine(ReloadLevel());
     }

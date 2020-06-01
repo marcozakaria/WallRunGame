@@ -38,7 +38,8 @@ SpriteAtlas:
     - {fileID: 2800000, guid: 06df3925f6b218747a7f3f6caa7c0cf5, type: 3}
     - {fileID: 2800000, guid: c87fe5380c9a617429ef4bb21c350fa6, type: 3}
     - {fileID: 2800000, guid: 65c40a98a0b58ef4db9e7e3008b6a72a, type: 3}
-    totalSpriteSurfaceArea: 552440
+    - {fileID: 2800000, guid: 367f866fef443124f8731cdaad75fe2e, type: 3}
+    totalSpriteSurfaceArea: 611832
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
@@ -49,6 +50,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: cfedae0c8da453f4c891afdd1c70c55d, type: 3}
   - {fileID: 21300000, guid: b63196cdcf6cd514d9da2947be03e97b, type: 3}
   - {fileID: 21300000, guid: 7f0269cd74b210049a466066bf7edbc8, type: 3}
+  - {fileID: 21300000, guid: 367f866fef443124f8731cdaad75fe2e, type: 3}
   - {fileID: 21300000, guid: ba03b59fd14ffbb40880066fad81d2ad, type: 3}
   m_PackedSpriteNamesToIndex:
   - play
@@ -58,6 +60,7 @@ SpriteAtlas:
   - pause
   - 'Star '
   - Share
+  - shop
   - home
   m_Tag: Sprite Atlas
   m_IsVariant: 0
