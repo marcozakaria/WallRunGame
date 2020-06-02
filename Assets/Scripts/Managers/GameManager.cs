@@ -130,6 +130,7 @@ public class GameManager : MonoBehaviour
 
     public void OnRetryButton()
     {
+        ADManagerGoogleADs.instance.CheckToPLayAD();
         AudioManager.instance.Play("button");
         transitionAnimator.SetTrigger("close");
         StartCoroutine(ReloadLevel());
